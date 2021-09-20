@@ -1,0 +1,40 @@
+h1, h2, p {
+    margin: 50px 20px;
+    clear: both;
+    font-size: 36px;
+}
+
+p {
+    margin-bottom: 50px;
+    font-weight: bold;
+}
+
+.area-container {
+    width: 1377px;
+    height: 70px;
+    margin: 50px 20px;
+}
+
+.area-container li {
+    float: left;
+    width: 64px;
+    height: 68px;
+    border: 2px solid #cecece;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    background-color: grey;
+    list-style-type: none;
+}
+
+.area-container .healthy {
+    background-color: #ceffce;
+    ;
+}
+
+.area-container .infected {
+    background-color: #ffcece;
+}
+
+.area-container .ocean {
+    background-color: #ceceff;
+}
