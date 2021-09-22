@@ -1,33 +1,15 @@
-const pandemicStartMap = "XX0X10010X000X010X010X00";
-let pandemicStartMapArr = [];
+const pandemicStartMap = "XX0X1000X10X1X0XXXXXX";
 let pandemicCutMapArr = [];
 let pandemicEndMapArr = [];
 let pandemicEndMap;
-let areaCount = 0;
-let infectedCount = 0;
+let areaCount;
+let infectedCount;
 let startArea = document.querySelector('.start-area');
 let endArea = document.querySelector('.end-area');
+let startBlockLink = 'area-start-';
+let endBlockLink = 'area-end-';
 
-if (pandemicStartMap.length < 8) {
-    document.querySelector('.quarantine-world').style.width = '600px';
-} else {
-    document.querySelector('.quarantine-world').style.width = pandemicStartMap.length * 72 + 80 + 'px';
-}
-
-pandemicStartMapArr = pandemicStartMap.split("");
-pandemicStartMapArr.forEach(function (item, i) {
-    let currentId = i + 1;
-    let newBlock = document.createElement('li');
-    newBlock.id = 'area-start-' + currentId;
-    startArea.append(newBlock);
-    if (item == 1) {
-        document.getElementById('area-start-' + currentId).classList.add('infected');
-    } else if (item == 0) {
-        document.getElementById('area-start-' + currentId).classList.add('healthy');
-    } else {
-        document.getElementById('area-start-' + currentId).classList.add('ocean');
-    }
-});
+renderMap(pandemicStartMap, startBlockLink, startArea);
 
 pandemicCutMapArr = pandemicStartMap.split("X");
 pandemicEndMapArr = pandemicCutMapArr.map(function (item) {
@@ -38,27 +20,34 @@ pandemicEndMapArr = pandemicCutMapArr.map(function (item) {
         return item;
     }
 });
-
 pandemicEndMap = pandemicEndMapArr.join("X");
 
-pandemicEndMapArr = pandemicEndMap.split("");
-pandemicEndMapArr.forEach(function (item, i) {
-    let endId = i + 1;
-    let newBlock = document.createElement('li');
-    newBlock.id = 'area-end-' + endId;
-    endArea.append(newBlock);
-    if (item == 1) {
-        document.getElementById('area-end-' + endId).classList.add('infected');
-        areaCount++;
-        infectedCount++;
-    } else if (item == 0) {
-        document.getElementById('area-end-' + endId).classList.add('healthy');
-        areaCount++;
-    } else {
-        document.getElementById('area-end-' + endId).classList.add('ocean');
-    }
-});
+renderMap(pandemicEndMap, endBlockLink, endArea);
 
 document.querySelector('.total-count').textContent = areaCount;
 document.querySelector('.infected-count').textContent = infectedCount;
 document.querySelector('.infected-percentage').textContent = infectedCount / areaCount * 100 || 0;
+
+function renderMap(pandemicMap, blockLink, mapContainer) {
+    let areaFuncCount = 0;
+    let infectedFuncCount = 0;
+    let pandemicMapArr = pandemicMap.split('');
+    pandemicMapArr.forEach(function (item, i) {
+        let endId = i + 1;
+        let newBlock = document.createElement('li');
+        newBlock.id = blockLink + endId;
+        mapContainer.append(newBlock);
+        if (item == 1) {
+            document.getElementById(blockLink + endId).classList.add('infected');
+            areaFuncCount++;
+            infectedFuncCount++;
+        } else if (item == 0) {
+            document.getElementById(blockLink + endId).classList.add('healthy');
+            areaFuncCount++;
+        } else {
+            document.getElementById(blockLink + endId).classList.add('ocean');
+        }
+    });
+    areaCount = areaFuncCount;
+    infectedCount = infectedFuncCount;
+}
